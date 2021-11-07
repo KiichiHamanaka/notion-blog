@@ -24,6 +24,17 @@ export const getDatabase = async () => {
             },
         ],
     });
-    console.log(response)
     return response.results
 }
+
+export const getPage = async (pid) => {
+    const response = await notion.pages.retrieve({ page_id: pid });
+    return response;
+}
+
+export const getBlocks = async (bid) => {
+    const response = await notion.blocks.children.list({
+        block_id: bid,
+    });
+    return response.results;
+};
