@@ -1,4 +1,4 @@
-import { getDatabase, getPage } from "../util/notion";
+import { getDatabase } from "../util/notion";
 import Card from "../components/Card";
 const Home = ({ result }) => {
   return (
