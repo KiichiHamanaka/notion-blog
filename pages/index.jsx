@@ -1,18 +1,18 @@
-import Link from "next/link";
 import { getDatabase, getPage } from "../util/notion";
-
+import Card from "../components/Card";
 const Home = ({ result }) => {
   return (
     <div>
-      <Link href="/portfolio">
-        <a>ぽーとふぉりお</a>
-      </Link>
-
       {result.map((page) => {
+        console.dir(page, { depth: null });
         return (
-          <Link href={`/${page.id}`} key={page.id}>
-            <a>{page.properties.Post.title[0].plain_text}</a>
-          </Link>
+          <Card
+            title={page.properties.Post.title[0].plain_text}
+            link={`/${page.id}`}
+            tag="プログラミング"
+            date={page.created_time}
+            key={page.id}
+          />
         );
       })}
     </div>

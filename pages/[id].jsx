@@ -1,8 +1,10 @@
 import { getBlocks, getDatabase, getPage } from "../util/notion";
 
-const Post = ({ blocks }) => {
+const Post = ({ title, blocks }) => {
   return (
     <div>
+      <title>{title}</title>
+      <h3>{title}</h3>
       {blocks.map((page) => {
         if (page.type === "paragraph") {
           return (
@@ -26,18 +28,17 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const { id } = context.params;
-  // const page = await getPage(id);
+  const page = await getPage(id);
   const blocks = await getBlocks(id);
   // mapの中でh3とか判定してcaseでreturnすれば？
-
   // const chooseOne = page.find((element) => element.id === id);
-  // console.dir(chooseOne, { depth: null });
+  console.dir(page, { depth: null });
 
-  // const title = blocks.properties.Post.title[0].plain_text;
+  const title = page.properties.Post.title[0].plain_text;
   return {
     props: {
       blocks,
-      // title,
+      title,
     },
     revalidate: 120,
   };
