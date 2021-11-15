@@ -1,6 +1,17 @@
 import { getBlocks, getDatabase, getPage } from "../util/notion";
+import BlogCard from "../components/BlogCard";
+import getMeta from "../util/getMeta";
 
-const Post = ({ title, blocks }) => {
+const getMetas = async (blocks) => {
+  const bookmarks = blocks.filter((page) => page.type === "bookmark");
+  const urls = bookmarks.map((url) => url.bookmark.url);
+  const metasPromise = await urls.map(async (url) => await getMeta(url));
+  return await Promise.all(metasPromise).then((meta) => meta);
+};
+
+const Post = ({ title, blocks, metas }) => {
+  let bookmarkCount = 0;
+
   return (
     <div>
       <title>{title}</title>
@@ -12,6 +23,8 @@ const Post = ({ title, blocks }) => {
               <p>{page.paragraph.text[0].plain_text}</p>
             )
           );
+        } else if (page.type === "bookmark") {
+          return <BlogCard meta={metas[bookmarkCount++]} />;
         }
       })}
     </div>
@@ -29,19 +42,21 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const { id } = context.params;
   const page = await getPage(id);
-  const blocks = await getBlocks(id);
-  // mapの中でh3とか判定してcaseでreturnすれば？
-  // const chooseOne = page.find((element) => element.id === id);
-  console.dir(page, { depth: null });
-
   const title = page.properties.Post.title[0].plain_text;
-  return {
-    props: {
-      blocks,
-      title,
-    },
-    revalidate: 120,
-  };
+  const blocks = await getBlocks(id);
+  try {
+    const metas = await getMetas(blocks);
+    return {
+      props: {
+        blocks,
+        title,
+        metas,
+      },
+      revalidate: 120,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default Post;
