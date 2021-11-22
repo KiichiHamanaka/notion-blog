@@ -51,6 +51,7 @@ export const getStaticProps: GetStaticProps = async (
   try {
     const { id } = context.params;
     const page = await getPage(id);
+    // @ts-ignore
     const title = page.properties.Post.title[0].plain_text;
     const blocks = await getBlocks(id);
     const metas: Array<OgpParserResult> = await meta.getMetas(blocks);

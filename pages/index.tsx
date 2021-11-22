@@ -13,6 +13,7 @@ const Home = (props: props) => {
         {props.database.results.map((page) => {
           return (
             <Card
+              // @ts-ignore
               title={page.properties.Post.title[0].plain_text}
               link={`/${page.id}`}
               tag="プログラミング"
