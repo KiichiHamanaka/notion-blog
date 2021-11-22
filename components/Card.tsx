@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import Link from "next/link";
+import { css } from "@emotion/react";
 
 type props = {
   title: string;
@@ -8,14 +9,23 @@ type props = {
   tag: string;
 };
 
+const card = css`
+  width: 100%;
+  margin: 0.5rem;
+`;
+
+const small = css`
+  font-size: 14px;
+`;
+
 const Card = (props: props) => {
   const day = dayjs(props.date).format("YYYY-MM-DD");
   return (
-    <div>
+    <div css={card}>
       <Link href={props.link}>
         <a>
-          <h3>{props.title}</h3>
-          {day}
+          <p>{props.title} </p>
+          <p css={small}>{day}</p>
         </a>
       </Link>
     </div>

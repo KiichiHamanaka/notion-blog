@@ -9,12 +9,11 @@
     "preinstall": "typesync || :"
   },
   "dependencies": {
+    "@emotion/babel-plugin": "^11.3.0",
     "@emotion/cache": "^11.5.0",
     "@emotion/react": "^11.5.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@mui/icons-material": "^5.0.0-rc.1",
-    "@mui/material": "^5.0.0-rc.1",
     "@notionhq/client": "^0.4.6",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "dayjs": "^1.10.7",
@@ -27,7 +26,6 @@
     "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "tailwindcss": "^2.2.19",
     "typesync": "^0.8.0"
   },
   "devDependencies": {

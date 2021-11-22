@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import { getDatabase } from "../util/notion";
 import Card from "../components/Card";
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -8,22 +7,20 @@ type props = { database: QueryDatabaseResponse };
 
 const Home = (props: props) => {
   return (
-    <Container maxWidth="sm">
-      <div>
-        {props.database.results.map((page) => {
-          return (
-            <Card
-              // @ts-ignore
-              title={page.properties.Post.title[0].plain_text}
-              link={`/${page.id}`}
-              tag="プログラミング"
-              date={page.created_time}
-              key={page.id}
-            />
-          );
-        })}
-      </div>
-    </Container>
+    <div>
+      {props.database.results.map((page) => {
+        return (
+          <Card
+            // @ts-ignore
+            title={page.properties.Post.title[0].plain_text}
+            link={`/${page.id}`}
+            tag="プログラミング"
+            date={page.created_time}
+            key={page.id}
+          />
+        );
+      })}
+    </div>
   );
 };
 

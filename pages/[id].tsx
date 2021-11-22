@@ -4,6 +4,9 @@ import * as meta from "../util/meta";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { GetBlockResponse } from "@notionhq/client/build/src/api-endpoints";
 import { OgpParserResult } from "ogp-parser";
+import dayjs from "dayjs";
+import { css } from "@emotion/react";
+import PostTitle from "../components/PostTitle";
 
 // type Block = Pick<GetBlockResponse, "type" | "paragraph">;
 
@@ -12,6 +15,7 @@ type bookmark = {};
 type props = {
   title: string;
   blocks: Array<GetBlockResponse>;
+  date: string;
   metas: Array<OgpParserResult>;
 };
 
@@ -21,7 +25,7 @@ const Post = (props: props) => {
   return (
     <div>
       <title>{props.title}</title>
-      <h3>{props.title}</h3>
+      <PostTitle title={props.title} />
       {props.blocks.map((page) => {
         if (page.type === "paragraph") {
           return (
@@ -51,6 +55,7 @@ export const getStaticProps: GetStaticProps = async (
   try {
     const { id } = context.params;
     const page = await getPage(id);
+    const date = dayjs(page.created_time).format("YYYY-MM-DD");
     // @ts-ignore
     const title = page.properties.Post.title[0].plain_text;
     const blocks = await getBlocks(id);
@@ -60,6 +65,7 @@ export const getStaticProps: GetStaticProps = async (
       props: {
         blocks,
         title,
+        date,
         metas,
       },
       revalidate: 120,
