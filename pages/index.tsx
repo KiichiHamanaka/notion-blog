@@ -1,12 +1,16 @@
 import Container from "@mui/material/Container";
 import { getDatabase } from "../util/notion";
 import Card from "../components/Card";
-const Home = ({ result }) => {
+import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import { GetStaticProps } from "next";
+
+type props = { database: QueryDatabaseResponse };
+
+const Home = (props: props) => {
   return (
     <Container maxWidth="sm">
       <div>
-        {result.map((page) => {
-          // console.dir(page, { depth: null });
+        {props.database.results.map((page) => {
           return (
             <Card
               title={page.properties.Post.title[0].plain_text}
@@ -22,11 +26,11 @@ const Home = ({ result }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const database = await getDatabase();
   return {
     props: {
-      result: database,
+      database,
     },
     revalidate: 120,
   };

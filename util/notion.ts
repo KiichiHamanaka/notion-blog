@@ -1,4 +1,5 @@
 import { Client } from "@notionhq/client";
+import { CreatePageResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const notion = new Client({
   auth: process.env.NEXT_PUBLIC_NOTION_TOKEN,
@@ -24,10 +25,10 @@ export const getDatabase = async () => {
       },
     ],
   });
-  return response.results;
+  return response;
 };
 
-export const getPage = async (pid) => {
+export const getPage = async (pid): Promise<CreatePageResponse> => {
   return await notion.pages.retrieve({ page_id: pid });
 };
 
