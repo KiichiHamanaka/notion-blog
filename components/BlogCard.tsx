@@ -14,10 +14,14 @@ const blogCardStyles = css`
   display: flex;
   width: auto;
   height: 100px;
-  border: solid 1px darkgray;
+  border: solid 1px #2d2d2d;
   border-radius: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  :hover {
+    filter: brightness(110%);
+  }
 `;
 
 const blogCardContents = css`
@@ -47,6 +51,7 @@ const imageStyles = css`
 `;
 
 const BlogCard = (props: props) => {
+  console.dir(props.meta, { depth: null });
   const domain = props.meta.ogp["og:url"][0].match(
     /^https?:\/{2,}(.*?)(?:\/|\?|#|$)/
   )[1];
