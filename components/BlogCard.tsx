@@ -51,7 +51,6 @@ const imageStyles = css`
 `;
 
 const BlogCard = (props: props) => {
-  console.dir(props.meta, { depth: null });
   const domain = props.meta.ogp["og:url"][0].match(
     /^https?:\/{2,}(.*?)(?:\/|\?|#|$)/
   )[1];

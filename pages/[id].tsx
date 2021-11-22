@@ -5,7 +5,6 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { GetBlockResponse } from "@notionhq/client/build/src/api-endpoints";
 import { OgpParserResult } from "ogp-parser";
 import dayjs from "dayjs";
-import { css } from "@emotion/react";
 import PostTitle from "../components/PostTitle";
 
 // type Block = Pick<GetBlockResponse, "type" | "paragraph">;
@@ -26,11 +25,11 @@ const Post = (props: props) => {
     <div>
       <title>{props.title}</title>
       <PostTitle title={props.title} />
-      {props.blocks.map((page) => {
+      {props.blocks.map((page, index) => {
         if (page.type === "paragraph") {
           return (
             page.paragraph.text.length !== 0 && (
-              <p>{page.paragraph.text[0].plain_text}</p>
+              <p key={index}>{page.paragraph.text[0].plain_text}</p>
             )
           );
         } else if (page.type === "bookmark") {
